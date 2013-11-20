@@ -18,38 +18,29 @@
 package org.fusebyexample.activemq;
 
 import javax.jms.*;
-import javax.naming.Context;
-import javax.naming.InitialContext;
 
+import org.apache.qpid.amqp_1_0.jms.impl.ConnectionFactoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SimpleConsumer {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleConsumer.class);
-
     private static final Boolean NON_TRANSACTED = false;
-    private static final String CONNECTION_FACTORY_NAME = "myJmsFactory";
-    private static final String DESTINATION_NAME = "queue/simple";
     private static final int MESSAGE_TIMEOUT_MILLISECONDS = 120000;
 
     public static void main(String args[]) {
         Connection connection = null;
 
         try {
-            // JNDI lookup of JMS Connection Factory and JMS Destination
-            Context context = new InitialContext();
-            ConnectionFactory factory = (ConnectionFactory) context.lookup(CONNECTION_FACTORY_NAME);
-            Destination destination = (Destination) context.lookup(DESTINATION_NAME);
-
-            connection = factory.createConnection();
+            ConnectionFactory factory = (ConnectionFactory) new ConnectionFactoryImpl("localhost", 5672, "admin", "admin");
+            connection = factory.createConnection(/*"admin", "admin"*/);
             connection.start();
 
             Session session = connection.createSession(NON_TRANSACTED, Session.AUTO_ACKNOWLEDGE);
+            Destination destination = session.createTopic(SimpleProducer.DESTINATION_NAME);
             MessageConsumer consumer = session.createConsumer(destination);
 
-            LOG.info("Start consuming messages from " + destination.toString() + " with " + MESSAGE_TIMEOUT_MILLISECONDS + "ms timeout");
-
-            // Synchronous message consumer
+            LOG.info("Start consuming messages from [" + SimpleProducer.DESTINATION_NAME + "] with " + MESSAGE_TIMEOUT_MILLISECONDS + "ms timeout");
             int i = 1;
             while (true) {
                 Message message = consumer.receive(MESSAGE_TIMEOUT_MILLISECONDS);
@@ -68,11 +59,6 @@ public class SimpleConsumer {
         } catch (Throwable t) {
             LOG.error("Error receiving message", t);
         } finally {
-            // Cleanup code
-            // In general, you should always close producers, consumers,
-            // sessions, and connections in reverse order of creation.
-            // For this simple example, a JMS connection.close will
-            // clean up all other resources.
             if (connection != null) {
                 try {
                     connection.close();

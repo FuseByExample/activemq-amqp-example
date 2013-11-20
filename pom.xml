@@ -28,11 +28,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <activemq.version>5.8.0.redhat-60024</activemq.version>
-
-        <qpid.version>0.22</qpid.version>
-
+        <activemq.version>5.9.0.redhat-610147</activemq.version>
+        <qpid.version>0.24</qpid.version>
         <slf4j-version>1.6.6</slf4j-version>
         <log4j-version>1.2.17</log4j-version>
     </properties>
