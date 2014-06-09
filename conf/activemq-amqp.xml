@@ -26,18 +26,50 @@
     <!-- Allows us to use system properties as variables in this configuration file -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"/>
 
-    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="brokerOne" dataDirectory="./target/activemq-data">
+    <!-- The <broker> element is used to configure the ActiveMQ broker -->
+    <broker xmlns="http://activemq.apache.org/schema/core"
+            brokerName="brokerOne"
+            dataDirectory="./target/activemq-data">
 
+        <!--
+            The managementContext is used to configure how ActiveMQ is exposed in
+            JMX. By default, ActiveMQ uses the MBean server that is started by
+            the JVM. For more information, see:
+
+            http://activemq.apache.org/jmx.html
+        -->
         <managementContext>
             <managementContext createConnector="false"/>
         </managementContext>
 
+        <!--
+            Configure message persistence for the broker. The default persistence
+            mechanism is the KahaDB store (identified by the kahaDB tag).
+            For more information, see:
+
+            http://activemq.apache.org/persistence.html
+        -->
         <persistenceAdapter>
             <kahaDB directory="./target/activemq-data/brokerOne/kahadb"/>
         </persistenceAdapter>
 
+        <plugins>
+            <simpleAuthenticationPlugin>
+                <users>
+                    <authenticationUser username="admin" password="admin" groups="users,admin"/>
+                </users>
+            </simpleAuthenticationPlugin>
+        </plugins>
+
+        <!--
+            The transport connectors expose ActiveMQ over a given protocol to
+            clients and other brokers. For more information, see:
+
+            http://activemq.apache.org/configuring-transports.html
+        -->
         <transportConnectors>
-            <transportConnector name="amqp" uri="amqp://0.0.0.0:5672"/>
+            <!-- DOS protection, limit concurrent connections to 1000 and frame size to 100MB -->
+            <transportConnector name="amqp" uri="amqp://0.0.0.0:5672?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
         </transportConnectors>
 
     </broker>
