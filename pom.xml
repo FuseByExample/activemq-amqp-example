@@ -29,7 +29,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <activemq.version>5.9.0.redhat-610314</activemq.version>
+        <activemq.version>5.9.0.redhat-610379</activemq.version>
 
         <qpid.version>0.24</qpid.version>
 
@@ -122,7 +122,7 @@
                     <plugin>
                         <groupId>org.apache.activemq.tooling</groupId>
                         <artifactId>activemq-maven-plugin</artifactId>
-                        <version>5.8.0</version>
+                        <version>5.9.0</version>
                         <configuration>
                             <configUri>xbean:file:conf/activemq-amqp.xml</configUri>
                         </configuration>
