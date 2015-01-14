@@ -22,18 +22,22 @@
 
     <groupId>org.fusebyexample.activemq</groupId>
     <artifactId>activemq-amqp-example</artifactId>
-    <version>5.9.0</version>
+    <version>5.10.0</version>
 
     <name>ActiveMQ AMQP Example</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <activemq.version>5.10.0.redhat-620063</activemq.version>
+        <activemq.maven.plugin.version>5.10.0</activemq.maven.plugin.version>
+        <exec.maven.plugin.version>1.3.2</exec.maven.plugin.version>
+        <geronimo.jms.version>1.1.1</geronimo.jms.version>
+        <maven.compiler.plugin.version>3.2</maven.compiler.plugin.version>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <qpid.version>0.30</qpid.version>
 
-        <activemq.version>5.9.0.redhat-610379</activemq.version>
-
-        <qpid.version>0.24</qpid.version>
-
-        <slf4j-version>1.7.5</slf4j-version>
+        <slf4j-version>1.7.10</slf4j-version>
         <log4j-version>1.2.17</log4j-version>
     </properties>
 
@@ -96,7 +100,7 @@
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-jms_1.1_spec</artifactId>
-            <version>1.1.1</version>
+            <version>${geronimo.jms.version}</version>
         </dependency>
 
         <!-- Logging -->
@@ -124,10 +128,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -144,7 +148,7 @@
                     <plugin>
                         <groupId>org.apache.activemq.tooling</groupId>
                         <artifactId>activemq-maven-plugin</artifactId>
-                        <version>5.9.0</version>
+                        <version>${activemq.maven.plugin.version}</version>
                         <configuration>
                             <configUri>xbean:file:conf/activemq-amqp.xml</configUri>
                         </configuration>
@@ -186,7 +190,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.2.1</version>
+                        <version>${exec.maven.plugin.version}</version>
                         <executions>
                             <execution>
                                 <phase>package</phase>
@@ -212,7 +216,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.2.1</version>
+                        <version>${exec.maven.plugin.version}</version>
                         <executions>
                             <execution>
                                 <phase>package</phase>
