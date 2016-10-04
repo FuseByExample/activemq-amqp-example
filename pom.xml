@@ -22,30 +22,42 @@
 
     <groupId>org.fusebyexample.activemq</groupId>
     <artifactId>activemq-amqp-example</artifactId>
-    <version>5.10.0</version>
+    <version>5.11.0</version>
 
     <name>ActiveMQ AMQP Example</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <activemq.version>5.11.0.redhat-621084</activemq.version>
-        <activemq.maven.plugin.version>5.11.0</activemq.maven.plugin.version>
+
+        <jboss.fuse.bom.version>6.3.0.redhat-191</jboss.fuse.bom.version>
+
         <exec.maven.plugin.version>1.3.2</exec.maven.plugin.version>
         <geronimo.jms.version>1.1.1</geronimo.jms.version>
         <maven.compiler.plugin.version>3.2</maven.compiler.plugin.version>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
+
         <qpid.version>0.30</qpid.version>
 
-        <slf4j.version>1.7.10</slf4j.version>
-        <log4j.version>1.2.17</log4j.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.fuse.bom</groupId>
+                <artifactId>jboss-fuse-parent</artifactId>
+                <version>${jboss.fuse.bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 
     <repositories>
         <repository>
-            <id>fusesource.releases</id>
-            <name>FuseSource Release Repository</name>
-            <url>https://repository.jboss.org/nexus/content/repositories/fs-releases/</url>
+            <id>redhat-ga-repository</id>
+            <url>https://maven.repository.redhat.com/ga</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -54,22 +66,21 @@
             </snapshots>
         </repository>
         <repository>
-            <id>fusesource.ea</id>
-            <name>FuseSource Early Access Release Repository</name>
-            <url>https://repository.jboss.org/nexus/content/groups/ea/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <id>redhat-ea-repository</id>
+            <url>https://maven.repository.redhat.com/earlyaccess/all</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
     </repositories>
+
     <pluginRepositories>
         <pluginRepository>
-            <id>fusesource.releases</id>
-            <name>FuseSource Release Repository</name>
-            <url>https://repository.jboss.org/nexus/content/repositories/fs-releases/</url>
+            <id>redhat-ga-repository</id>
+            <url>https://maven.repository.redhat.com/ga</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -78,15 +89,14 @@
             </snapshots>
         </pluginRepository>
         <pluginRepository>
-            <id>fusesource.ea</id>
-            <name>FuseSource Early Access Release Repository</name>
-            <url>https://repository.jboss.org/nexus/content/groups/ea/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <id>redhat-ea-repository</id>
+            <url>https://maven.repository.redhat.com/earlyaccess/all</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </pluginRepository>
     </pluginRepositories>
 
@@ -107,18 +117,15 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
             <scope>runtime</scope>
         </dependency>
     </dependencies>
@@ -138,49 +145,6 @@
     </build>
 
     <profiles>
-        <profile>
-            <id>broker</id>
-
-            <build>
-                <defaultGoal>install activemq:run</defaultGoal>
-
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.activemq.tooling</groupId>
-                        <artifactId>activemq-maven-plugin</artifactId>
-                        <version>${activemq.maven.plugin.version}</version>
-                        <configuration>
-                            <configUri>xbean:file:conf/activemq-amqp.xml</configUri>
-                        </configuration>
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.apache.activemq</groupId>
-                                <artifactId>activemq-spring</artifactId>
-                                <version>${activemq.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.apache.activemq</groupId>
-                                <artifactId>activemq-jaas</artifactId>
-                                <version>${activemq.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.apache.activemq</groupId>
-                                <artifactId>activemq-amqp</artifactId>
-                                <version>${activemq.version}</version>
-                            </dependency>
-
-                            <!-- dependency to pick up resources (e.g. log4j.properties) on classpath -->
-                            <dependency>
-                                <groupId>${project.groupId}</groupId>
-                                <artifactId>${project.artifactId}</artifactId>
-                                <version>${project.version}</version>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
         <profile>
             <id>consumer</id>
             <build>

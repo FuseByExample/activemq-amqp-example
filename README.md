@@ -6,27 +6,19 @@ This is an example of using [Apache ActiveMQ]'s [AMQP] 1.0 protocol with the [Ap
 Notes:
 
 * all instructions assume you are executing from the top level directory of this project
-* it is assumed you have [Apache Maven] installed, and that you are familiar with its usage
-* assumes you are using [Apache ActiveMQ] 5.10.0 or later, or [JBoss A-MQ] 6.2.0 or later
+* it is assumed you have [Apache Maven] 3.2.3 or newer installed, and that you are familiar with its usage
+* assumes you are using [Apache ActiveMQ] 5.11.0 or later, or [JBoss A-MQ] 6.3.0 or later
 
-Note: All of this code will run correctly against either [Apache ActiveMQ] 5.10.0 or [JBoss A-MQ] 6.2.0 as both
-internally use the same ActiveMQ 5.10.0 code base. The instructions on how to start (command line) the brokers from an
-ActiveMQ install will **not** work with [JBoss A-MQ] (e.g. `bin/amq`) as [JBoss A-MQ] has ActiveMQ
-deployed within an [Apache Karaf] container to allow for runtime updates to configuration information (versus needing to
-restart the broker in the case on [Apache ActiveMQ]). There are additional steps required to use these provided broker
-configuration files and deploy them correctly to [JBoss A-MQ] with its Fabric based configuration system.
+Note: All of this code will run correctly against either [Apache ActiveMQ] 5.11.0 or [JBoss A-MQ] 6.3.0 as both
+internally use the same ActiveMQ 5.11.0 code base. 
 
-[JBoss A-MQ]'s distribution contains an `extras` directory with a supported version of the [Apache ActiveMQ] 5.10.0 binary
-install.
-
-JBoss A-MQ 6.2.0 Setup
+JBoss A-MQ 6.3.0 Setup
 ----------------------
 
-For this example to work, it assumes that:
+For this example to work, make the following changes to your Apache ActiveMQ or JBoss A-MQ installation
 
-* A user named `admin` with password `admin` has been configured. This can be done by adding `admin=admin,admin` to
-  the end of the file `etc/users.properties`
-* You have added the AMQP 1.0 transport connector. Add the following to the `transportConnectors` section of the
+* Create a user named `admin` with password `admin` by adding `admin=admin,admin` to the end of the file `etc/users.properties`
+* Add the AMQP 1.0 transport connector bu adding the following to the `transportConnectors` section of the
   `etc/activemq.xml` file (more details here http://activemq.apache.org/amqp.html):
 
 ```xml
@@ -36,19 +28,15 @@ For this example to work, it assumes that:
 Starting ActiveMQ
 -----------------
 
-Start the broker in a shell:
+Start the broker in a shell from the Apache ActiveMQ install:
 
-    shell1> mvn -P broker
+    shell1> <activemq_home>/bin/amq 
 
-Alternatively you can start from an Apache ActiveMQ install:
-
-    shell1> <activemq_home>/bin/activemq console xbean:file:conf/activemq-amqp.xml
-
-Start the message consumer in another shell:
+Start the message consumer in another shell from the top level directory of this project:
 
     shell2> mvn -P consumer
 
-Start the message producer in another shell:
+Start the message producer in another shell from the top level directory of this project:
 
     shell3> mvn -P producer
 
