@@ -29,7 +29,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <jboss.fuse.bom.version>6.3.0.redhat-191</jboss.fuse.bom.version>
+        <jboss.fuse.bom.version>6.3.0.redhat-187</jboss.fuse.bom.version>
 
         <exec.maven.plugin.version>1.3.2</exec.maven.plugin.version>
         <geronimo.jms.version>1.1.1</geronimo.jms.version>
@@ -65,32 +65,12 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-        <repository>
-            <id>redhat-ea-repository</id>
-            <url>https://maven.repository.redhat.com/earlyaccess/all</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
             <id>redhat-ga-repository</id>
             <url>https://maven.repository.redhat.com/ga</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
-            <id>redhat-ea-repository</id>
-            <url>https://maven.repository.redhat.com/earlyaccess/all</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
